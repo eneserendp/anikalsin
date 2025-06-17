@@ -23,10 +23,25 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en">
+    <html lang="tr">
       <body
-        className={`${geistSans.variable} ${geistMono.variable} antialiased`}
+        className={
+          `${geistSans.variable} ${geistMono.variable} antialiased min-h-screen font-sans relative text-yellow-200`
+        }
+        style={{
+          backgroundColor: '#111',
+          backgroundImage: `url("data:image/svg+xml;utf8,<svg width='100%' height='100%' viewBox='0 0 800 600' xmlns='http://www.w3.org/2000/svg'><g stroke='%23FFD700' stroke-width='2'><polygon points='400,100 500,200 400,300 300,200' fill='none'/><polygon points='400,300 500,400 400,500 300,400' fill='none'/><polygon points='300,200 400,300 300,400 200,300' fill='none'/><polygon points='500,200 600,300 500,400 400,300' fill='none'/><polygon points='200,300 300,400 200,500 100,400' fill='none'/><polygon points='600,300 700,400 600,500 500,400' fill='none'/></g></svg>")`,
+          backgroundSize: 'cover',
+          backgroundRepeat: 'no-repeat',
+          backgroundPosition: 'center',
+        }}
       >
+        {/* Navigation Bar */}
+        <nav className="w-full flex justify-center py-6 mb-4">
+          <div className="flex gap-8 bg-zinc-900/70 border border-yellow-700 rounded-full px-8 py-2 shadow-lg">
+            <a href="/" className="text-yellow-200 hover:text-yellow-400 font-semibold italic transition-colors">Anı Bırak</a>
+          </div>
+        </nav>
         {children}
       </body>
     </html>

@@ -20,7 +20,22 @@
 }
 
 body {
-  background: var(--background);
+  background-color: #111;
   color: var(--foreground);
   font-family: Arial, Helvetica, sans-serif;
+  font-style: italic;
+}
+
+h1, h2, h3, h4, h5, h6 {
+  font-family: 'Georgia', 'Times New Roman', Times, serif;
+  font-style: italic;
+}
+
+/* Scrollbar gizle (scrollbar-hide) */
+.scrollbar-hide {
+  scrollbar-width: none; /* Firefox */
+  -ms-overflow-style: none; /* IE 10+ */
+}
+.scrollbar-hide::-webkit-scrollbar {
+  display: none; /* Chrome/Safari/Webkit */
 }
