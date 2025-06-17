@@ -49,7 +49,7 @@ export default function AudioRecorder({ onSave }: Props) {
             } else {
               setError(data.message || "Yükleme hatası");
             }
-          } catch (err) {
+          } catch {
             setError("Ses kaydı yüklenirken bir hata oluştu.");
           } finally {
             setLoading(false);
@@ -62,7 +62,7 @@ export default function AudioRecorder({ onSave }: Props) {
         };
         mediaRecorder.start();
         setRecording(true);
-      } catch (err: any) {
+      } catch {
         setError("Mikrofon erişimi alınamadı.");
         setLoading(false);
         setRecording(false);

@@ -1,7 +1,7 @@
 import type { NextApiRequest, NextApiResponse } from 'next';
 import formidable from 'formidable';
 import path from 'path';
-import fs from 'fs';
+// import fs from 'fs';
 
 export const config = {
   api: {
@@ -21,7 +21,8 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
   });
 
   try {
-    const [fields, files] = await form.parse(req);
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
+    const [_, files] = await form.parse(req);
 
     if (!files.file) {
       return res.status(400).json({ message: 'No file uploaded.' });
@@ -31,11 +32,11 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
     const filePath = `/uploads/${path.basename(uploadedFile.filepath)}`;
 
     res.status(200).json({ message: 'File uploaded successfully', url: filePath });
-  } catch (error: any) {
+  } catch (error) {
     console.error('File upload error:', error);
-    if (error.code === formidable.errors.biggerThanMaxFileSize) {
+    if (error instanceof Error && (error as any).code === formidable.errors.biggerThanMaxFileSize) {
       return res.status(413).json({ message: 'File size too large (max 5MB).' });
     }
-    res.status(500).json({ message: 'Something went wrong', error: error.message });
+    res.status(500).json({ message: 'Something went wrong', error: error instanceof Error ? error.message : String(error) });
   }
 } 

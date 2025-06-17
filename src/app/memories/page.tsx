@@ -148,15 +148,9 @@ export default function MemoriesPage() {
 }
 
 // Slider bileşeni (sayfa içinde tanımlı)
-function Slider({ memories, renderItem }: { memories: any[], renderItem: (m: any) => React.ReactNode }) {
+function Slider({ memories, renderItem }: { memories: Memory[], renderItem: (m: Memory) => React.ReactNode }) {
   const [index, setIndex] = useState(0);
   const scrollRef = useRef<HTMLDivElement>(null);
-  const showCount = 1; // Ortada 1 kart, sağında ve solunda 1'er kart (gölgeyle)
-  const canGoLeft = index > 0;
-  const canGoRight = index < memories.length - 1;
-
-  const goLeft = () => setIndex(i => Math.max(0, i - 1));
-  const goRight = () => setIndex(i => Math.min(memories.length - 1, i + 1));
 
   const scrollBy = (dir: 'left' | 'right') => {
     if (scrollRef.current) {

@@ -27,8 +27,8 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
     }).filter(Boolean);
 
     res.status(200).json({ memories });
-  } catch (error: any) {
+  } catch (error) {
     console.error('Error reading uploads directory:', error);
-    res.status(500).json({ message: 'Failed to retrieve memories', error: error.message });
+    res.status(500).json({ message: 'Failed to retrieve memories', error: error instanceof Error ? error.message : String(error) });
   }
 } 
