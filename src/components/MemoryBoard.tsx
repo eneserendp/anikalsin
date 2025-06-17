@@ -55,67 +55,6 @@ export default function MemoryBoard() {
     }
   };
 
-  // Ses kaydı başlat/durdur
-  const handleAudioRecord = async () => {
-    if (loading) return;
-    if (!recording) {
-      // Kayıt başlat
-      setLoading(true);
-      try {
-        const stream = await navigator.mediaDevices.getUserMedia({ audio: true });
-        streamRef.current = stream;
-        const mediaRecorder = new window.MediaRecorder(stream);
-        mediaRecorderRef.current = mediaRecorder;
-        audioChunks.current = [];
-
-        mediaRecorder.ondataavailable = (e) => {
-          audioChunks.current.push(e.data);
-        };
-
-        mediaRecorder.onstop = async () => {
-          const blob = new Blob(audioChunks.current, { type: "audio/webm" });
-          const formData = new FormData();
-          formData.append('file', blob, 'audio.webm');
-          try {
-            const response = await fetch('/api/upload', {
-              method: 'POST',
-              body: formData,
-            });
-            const data = await response.json();
-            if (response.ok) {
-              setMemories((prev) => [{ type: "audio", url: data.url }, ...prev]);
-              setThankYou('Sesli anınız başarıyla bırakıldı! Teşekkür ederiz.');
-              setTimeout(() => setThankYou(null), THANK_YOU_TIMEOUT);
-            } else {
-              alert(`Yükleme hatası: ${data.message}`);
-            }
-          } catch (error) {
-            alert('Ses kaydı yüklenirken bir hata oluştu.');
-          } finally {
-            setLoading(false);
-            // Stream'i sadece burada kapatıyoruz!
-            if (streamRef.current) {
-              streamRef.current.getTracks().forEach(track => track.stop());
-              streamRef.current = null;
-            }
-          }
-        };
-        mediaRecorder.start();
-        setRecording(true);
-      } catch (err: any) {
-        alert('Mikrofon erişimi alınamadı.');
-        setLoading(false);
-        setRecording(false);
-      }
-    } else {
-      // Kayıt durdur
-      if (mediaRecorderRef.current && mediaRecorderRef.current.state === 'recording') {
-        mediaRecorderRef.current.stop();
-      }
-      setRecording(false);
-    }
-  };
-
   return (
     <section className="flex flex-col items-center gap-8 py-8 bg-transparent min-h-screen w-full">
       {/* Çiftin fotoğrafı dikdörtgen çerçevede */}

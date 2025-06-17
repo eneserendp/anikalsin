@@ -55,8 +55,12 @@ export default function MemoriesPage() {
         } else {
           setError(data.message || 'Anılar yüklenirken bir hata oluştu.');
         }
-      } catch (err: any) {
-        setError(err.message || 'Sunucuya bağlanırken bir hata oluştu.');
+      } catch (err: unknown) {
+        if (err && typeof err === 'object' && 'message' in err) {
+          setError((err as { message?: string }).message || 'Sunucuya bağlanırken bir hata oluştu.');
+        } else {
+          setError('Sunucuya bağlanırken bir hata oluştu.');
+        }
       } finally {
         setLoading(false);
       }
@@ -149,7 +153,6 @@ export default function MemoriesPage() {
 
 // Slider bileşeni (sayfa içinde tanımlı)
 function Slider({ memories, renderItem }: { memories: Memory[], renderItem: (m: Memory) => React.ReactNode }) {
-  const [index, setIndex] = useState(0);
   const scrollRef = useRef<HTMLDivElement>(null);
 
   const scrollBy = (dir: 'left' | 'right') => {

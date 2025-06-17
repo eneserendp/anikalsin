@@ -34,7 +34,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
     res.status(200).json({ message: 'File uploaded successfully', url: filePath });
   } catch (error) {
     console.error('File upload error:', error);
-    if (error instanceof Error && (error as any).code === formidable.errors.biggerThanMaxFileSize) {
+    if (error instanceof Error && (typeof (error as { code?: unknown }).code !== 'undefined') && (error as { code?: unknown }).code === formidable.errors.biggerThanMaxFileSize) {
       return res.status(413).json({ message: 'File size too large (max 5MB).' });
     }
     res.status(500).json({ message: 'Something went wrong', error: error instanceof Error ? error.message : String(error) });
