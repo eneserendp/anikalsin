@@ -14,11 +14,7 @@ const THANK_YOU_TIMEOUT = 3000;
 
 export default function MemoryBoard() {
   const [memories, setMemories] = useState<Memory[]>([]);
-  const [recording, setRecording] = useState(false);
-  const mediaRecorderRef = useRef<MediaRecorder | null>(null);
-  const audioChunks = useRef<Blob[]>([]);
   const [loading, setLoading] = useState(false);
-  const streamRef = useRef<MediaStream | null>(null);
   const [thankYou, setThankYou] = useState<string | null>(null);
   // Seçilen dosya adı için state
   const [selectedPhoto, setSelectedPhoto] = useState<string | null>(null);
