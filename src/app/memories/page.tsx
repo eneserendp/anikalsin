@@ -1,5 +1,4 @@
 "use client";
-import Image from "next/image";
 import { useState, useEffect, useRef } from 'react';
 import CustomAudioPlayer from "../../components/CustomAudioPlayer";
 import clsx from "clsx";
@@ -126,7 +125,7 @@ export default function MemoriesPage() {
         <Slider memories={memories.filter(m => m.type === "photo")}
                 renderItem={(m) => (
                   <div className="bg-zinc-900/70 border border-yellow-700 rounded-2xl shadow-lg p-6 flex flex-col items-center">
-                    <Image src={m.url} alt="Anı Fotoğrafı" width={240} height={240} className="rounded-lg object-cover mb-3 border border-yellow-800" />
+                    <img src={m.url} alt="Anı Fotoğrafı" width={240} height={240} className="rounded-lg object-cover mb-3 border border-yellow-800" />
                     <span className="text-xs text-yellow-300 italic">Fotoğraf</span>
                     <DownloadButton url={m.url} label="Fotoğrafı İndir" />
                   </div>

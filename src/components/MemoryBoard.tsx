@@ -144,7 +144,7 @@ export default function MemoryBoard() {
           {memories.map((m, i) => (
             <div key={i} className="bg-zinc-900/80 border border-yellow-700 rounded-lg shadow-lg p-4 flex flex-col items-center">
               {m.type === "photo" ? (
-                <Image src={m.url} alt="Anı Fotoğrafı" width={200} height={200} className="rounded-md object-cover mb-2 border border-yellow-800" />
+                <img src={m.url} alt="Anı Fotoğrafı" width={200} height={200} className="rounded-md object-cover mb-2 border border-yellow-800" />
               ) : (
                 <CustomAudioPlayer src={m.url} />
               )}
